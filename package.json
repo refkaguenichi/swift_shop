@@ -1,0 +1,36 @@
+{
+  "name": "swift_shop",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "cd backend && node server",
+    "front": "cd frontend && npm start",
+    "back": "cd backend && nodemon server",
+    "dev": "concurrently \"npm run front\" \"npm run back\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/refkaguenichi/swift_shop.git"
+  },
+  "author": "refka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/refkaguenichi/swift_shop/issues"
+  },
+  "homepage": "https://github.com/refkaguenichi/swift_shop#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.8"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "dotenv": "^15.0.0",
+    "eslint": "^8.8.0",
+    "eslint-plugin-react": "^7.28.0",
+    "nodemon": "^2.0.15"
+  }
+}

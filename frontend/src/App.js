@@ -1,20 +1,22 @@
-import { data } from "./data";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Home from "./views/Home";
+import ProductView from "./views/ProductView";
+import Cart from "./views/Cart";
+import Navbar from "./components/Navbar";
+import Login from "./views/Login";
 const App = () => {
   return (
-    <div>
-      {data.products.map((product) => (
-        <div key={product._id}>
-          <a href={`/product/${product._id}`}>
-            <img src={product.image} alt={product.name} />
-          </a>
-          <h1>{product.name}</h1>
-          <i className="fa fa-star"></i>
-          <span>Rating:{product.rating}</span>
-          <i className="fa fa-dollar"></i>
-          <span>Price:{product.price}</span>
-        </div>
-      ))}
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/products/:id" element={<ProductView />} />
+        <Route exact path="/cart" element={<Cart />} />
+        <Route path="/cart/:id" element={<Cart />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </>
   );
 };
 
