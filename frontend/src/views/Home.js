@@ -19,7 +19,7 @@ const Home = () => {
       ) : error ? (
         <MessageBox variant="danger" error={error} />
       ) : (
-        <div className="row center">
+        <div className="rows center">
           {products.map((product) => (
             <Product key={product._id} product={product} />
           ))}

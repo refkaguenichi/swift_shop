@@ -31,9 +31,13 @@ const ProductView = () => {
       ) : (
         <>
           <Link to="/">Back to home</Link>
-          <div className="row top" key={product._id}>
+          <div className="rows top" key={product._id}>
             <div className="col-2">
-              <img className="large" src={product.image} alt={product.name} />
+              <img
+                className="large"
+                src={`/uploads/${product.image}`}
+                alt={product.name}
+              />
             </div>
             <div className="col-1">
               <ul>
@@ -59,13 +63,13 @@ const ProductView = () => {
               <div className="card card-body">
                 <ul>
                   <li>
-                    <div className="row">
+                    <div className="rows">
                       <span>Price:</span>
                       <span className="price">${product.price}</span>
                     </div>
                   </li>
                   <li>
-                    <div className="row">
+                    <div className="rows">
                       <span>Status:</span>
                       <>
                         {product.countInStock > 0 ? (
@@ -79,7 +83,7 @@ const ProductView = () => {
                   {product.countInStock > 0 && (
                     <>
                       <li>
-                        <div className="row">
+                        <div className="rows">
                           <div>Qty</div>
                           <div>
                             <select

@@ -25,10 +25,10 @@ const Cart = () => {
     dispatch(removeFromCart(productId));
   };
   const checkoutHandler = () => {
-    navigate(`/signin?redirect=shipping`);
+    navigate(`/login?redirect=/shipping`);
   };
   return (
-    <div className="row top">
+    <div className="rows top">
       <div className="col-2">
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
@@ -37,12 +37,16 @@ const Cart = () => {
           <ul>
             {cartItems.map((item) => (
               <li key={item.product}>
-                <div className="row">
+                <div className="rows">
                   <div>
-                    <img src={item.image} alt={item.name} className="small" />
+                    <img
+                      src={`/uploads/${item.image}`}
+                      alt={item.name}
+                      className="small"
+                    />
                   </div>
                   <div className="min-30">
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <Link to={`/products/${item.product}`}>{item.name}</Link>
                   </div>
                   <select
                     value={item.qty}
