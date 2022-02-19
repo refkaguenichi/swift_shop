@@ -5,10 +5,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "cd client && npm run build",
     "start": "cd backend && node server",
     "front": "cd frontend && npm start",
     "back": "cd backend && nodemon server",
     "dev": "concurrently \"npm run front\" \"npm run back\""
+  },
+  "engines": {
+    "node": "16.13.0"
   },
   "repository": {
     "type": "git",
@@ -24,6 +28,7 @@
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
     "extended": "^0.0.6",
+    "heroku": "^7.59.2",
     "jsonwebtoken": "^8.5.1",
     "mailgun.js": "^4.2.1",
     "mongoose": "^6.1.8",
