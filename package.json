@@ -6,6 +6,7 @@
   "main": "server.js",
   "scripts": {
     "build": "cd frontend && npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build",
     "start": "cd backend && node server",
     "front": "cd frontend && npm start",
     "back": "cd backend && nodemon server",
