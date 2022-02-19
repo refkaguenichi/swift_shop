@@ -5,7 +5,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "cd client && npm run build",
+    "build": "cd frontend && npm run build",
     "start": "cd backend && node server",
     "front": "cd frontend && npm start",
     "back": "cd backend && nodemon server",
