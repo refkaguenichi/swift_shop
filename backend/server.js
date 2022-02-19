@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import path from "path";
 import express from "express";
 import connectDB from "./config/connectDB.js";
 import summaryRouter from "./router/summaryRouter.js";
@@ -28,6 +29,12 @@ app.get("/api/config/paypal", (req, res) => {
 
 app.get("/api/config/google", (req, res) => {
   res.send(process.env.GOOGLE_API_KEY);
+});
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
 });
 
 const port = process.env.PORT || 5000;
