@@ -7,9 +7,16 @@ import {
   ORDER_DELETE_REQUEST,
   ORDER_DELETE_RESET,
   ORDER_DELETE_SUCCESS,
+  ORDER_DELIVER_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_RESET,
+  ORDER_DELIVER_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_LIST_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
   ORDER_MINE_LIST_FAIL,
   ORDER_MINE_LIST_REQUEST,
   ORDER_MINE_LIST_SUCCESS,
@@ -17,6 +24,9 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_RESET,
   ORDER_PAY_SUCCESS,
+  ORDER_SUMMARY_FAIL,
+  ORDER_SUMMARY_REQUEST,
+  ORDER_SUMMARY_SUCCESS,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, { type, payload }) => {
@@ -116,6 +126,22 @@ export const orderMineListReducer = (
   }
 };
 
+export const orderListSellerReducer = (
+  state = { orders: [] },
+  { type, payload }
+) => {
+  switch (type) {
+    case ORDER_LIST_REQUEST:
+      return { loading: true };
+    case ORDER_LIST_SUCCESS:
+      return { loading: false, orders: payload };
+    case ORDER_LIST_FAIL:
+      return { loading: false, error: payload };
+    default:
+      return state;
+  }
+};
+
 export const orderDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_DELETE_REQUEST:
@@ -126,6 +152,37 @@ export const orderDeleteReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case ORDER_DELETE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const orderDeliverReducer = (state = {}, { type, payload }) => {
+  switch (type) {
+    case ORDER_DELIVER_REQUEST:
+      return { loading: true };
+    case ORDER_DELIVER_SUCCESS:
+      return { loading: false, success: true };
+    case ORDER_DELIVER_FAIL:
+      return { loading: false, error: payload };
+    case ORDER_DELIVER_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const orderSummaryReducer = (
+  state = { loading: true, summary: {} },
+  { type, payload }
+) => {
+  switch (type) {
+    case ORDER_SUMMARY_REQUEST:
+      return { loading: true };
+    case ORDER_SUMMARY_SUCCESS:
+      return { loading: false, summary: payload };
+    case ORDER_SUMMARY_FAIL:
+      return { loading: false, error: payload };
     default:
       return state;
   }

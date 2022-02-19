@@ -41,7 +41,7 @@ const PaymentMethod = () => {
             <label htmlFor="paypal">PayPal</label>
           </div>
         </div>
-        <div>
+        {/* <div>
           <div>
             <input
               type="radio"
@@ -53,7 +53,7 @@ const PaymentMethod = () => {
             ></input>
             <label htmlFor="stripe">Stripe</label>
           </div>
-        </div>
+        </div> */}
         <div>
           <label />
           <button className="primary" type="submit">

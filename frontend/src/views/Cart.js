@@ -22,7 +22,9 @@ const Cart = () => {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (productId) => {
-    dispatch(removeFromCart(productId));
+    if (window.confirm("Are you sure to delete this product from cart?")) {
+      dispatch(removeFromCart(productId));
+    }
   };
   const checkoutHandler = () => {
     navigate(`/login?redirect=/shipping`);

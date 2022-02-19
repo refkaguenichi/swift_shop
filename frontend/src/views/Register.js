@@ -71,6 +71,11 @@ const Register = () => {
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <span>
+            <label />
+            Already have an account?{" "}
+            <Link to={`/login?redirect=${redirect}`}>Sign In</Link>
+          </span>
           <div>
             <label />
             <button className="primary" type="submit">
@@ -78,11 +83,6 @@ const Register = () => {
             </button>
           </div>
         </div>
-        <span>
-          <label />
-          Already have an account?{" "}
-          <Link to={`/login?redirect=${redirect}`}>Sign In</Link>
-        </span>
       </form>
     </div>
   );

@@ -8,6 +8,10 @@ const orderSchema = new mongoose.Schema(
         qty: { type: Number, required: true },
         image: { type: String, required: false },
         price: { type: Number, required: true },
+        seller: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
         product: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Product",
@@ -36,7 +40,10 @@ const orderSchema = new mongoose.Schema(
     taxPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    // seller: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
+    seller: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
     isPaid: { type: Boolean, default: false },
     paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },

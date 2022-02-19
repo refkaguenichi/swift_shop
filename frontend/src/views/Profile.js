@@ -10,6 +10,9 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [sellerName, setSellerName] = useState("");
+  const [sellerLogo, setSellerLogo] = useState("");
+  const [sellerDescription, setSellerDescription] = useState("");
   const dispatch = useDispatch();
   const userSignIn = useSelector((state) => state.userSignIn);
   const { userInfo } = userSignIn;
@@ -21,14 +24,6 @@ const Profile = () => {
     error: errorUpdate,
     loading: loadingUpdate,
   } = userUpdateProfile;
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Password and Confirm Password are not matched!");
-    } else {
-      dispatch(updateUserProfile({ userId: user._id, name, email, password }));
-    }
-  };
   useEffect(() => {
     if (!user) {
       dispatch({ type: USER_UPDATE_PROFILE_RESET });
@@ -36,14 +31,36 @@ const Profile = () => {
     } else {
       setName(user.name);
       setEmail(user.email);
+      if (user.seller) {
+        setSellerName(user.seller.name);
+        setSellerLogo(user.seller.logo);
+        setSellerDescription(user.seller.description);
+      }
     }
-  }, [user, dispatch, userInfo._id]);
+  }, [dispatch, userInfo._id, user]);
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // dispatch update profile
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password Are Not Matched");
+    } else {
+      dispatch(
+        updateUserProfile({
+          userId: user._id,
+          name,
+          email,
+          password,
+          sellerName,
+          sellerLogo,
+          sellerDescription,
+        })
+      );
+    }
+  };
   return (
     <div>
       <form className="form" onSubmit={submitHandler}>
-        <div>
-          <h1>User Profile</h1>
-        </div>
+        <h1>{userInfo.isSeller ? "Seller Profile" : "User Profile"}</h1>
         {loading ? (
           <LoadingBox />
         ) : error ? (
@@ -93,10 +110,43 @@ const Profile = () => {
                 id="confirmPassword"
                 type="password"
                 placeholder="Enter confirm password"
-                // value={password}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
+            {user && user.isSeller && (
+              <>
+                <div>
+                  <label htmlFor="sellerName">Seller Name</label>
+                  <input
+                    id="sellerName"
+                    type="text"
+                    placeholder="Enter Seller Name"
+                    value={sellerName}
+                    onChange={(e) => setSellerName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="sellerLogo">Seller Logo</label>
+                  <input
+                    id="sellerLogo"
+                    type="text"
+                    placeholder="Enter Seller Logo"
+                    value={sellerLogo}
+                    onChange={(e) => setSellerLogo(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="sellerDescription">Seller Description</label>
+                  <input
+                    id="sellerDescription"
+                    type="text"
+                    placeholder="Enter Seller Description"
+                    value={sellerDescription}
+                    onChange={(e) => setSellerDescription(e.target.value)}
+                  />
+                </div>
+              </>
+            )}
             <div>
               <label />
               <button className="primary" type="submit">

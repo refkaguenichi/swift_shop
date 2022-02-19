@@ -67,7 +67,7 @@ const PlaceOrder = () => {
                       <div className="row">
                         <div>
                           <img
-                            src={`/uploads/${item.image}`}
+                            src={item.image && `/uploads/${item.image}`}
                             alt={item.name}
                             className="small"
                           ></img>

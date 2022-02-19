@@ -1,22 +1,37 @@
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import {
+  productCategoryListReducer,
+  productCreateReducer,
+  productDeleteReducer,
   productDetailsReducer,
   productListReducer,
+  productReviewCreateReducer,
+  productUpdateReducer,
+  topProductListReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
+  userAddressMapReducer,
+  userDeleteReducer,
   userDetailsReducer,
+  userListReducer,
+  userReviewCreateReducer,
   userSignInReducer,
   userSignUpReducer,
+  userTopSellerListReducer,
   userUpdateProfileReducer,
+  userUpdateReducer,
 } from "./reducers/userReducer";
 import {
   orderCreateReducer,
   orderDeleteReducer,
+  orderDeliverReducer,
   orderDetailsReducer,
+  orderListSellerReducer,
   orderMineListReducer,
   orderPayReducer,
+  orderSummaryReducer,
 } from "./reducers/orderReducers";
 const initialState = {
   cart: {
@@ -35,18 +50,37 @@ const initialState = {
   },
 };
 const reducer = combineReducers({
-  productList: productListReducer,
-  productDetails: productDetailsReducer,
-  cart: cartReducer,
+  //user reducers
   userSignIn: userSignInReducer,
   userSignUp: userSignUpReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userUpdate: userUpdateReducer,
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
+  userTopSellersList: userTopSellerListReducer,
+  userReviewCreate: userReviewCreateReducer,
+  userAddressMap: userAddressMapReducer,
+  //cart reducer
+  cart: cartReducer,
+  //product reducer
+  productList: productListReducer,
+  topProductList: topProductListReducer,
+  productCategoryList: productCategoryListReducer,
+  productDetails: productDetailsReducer,
+  productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
+  productDelete: productDeleteReducer,
+  productReviewCreate: productReviewCreateReducer,
+  //order reducers
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
+  orderDeliver: orderDeliverReducer,
   orderMineList: orderMineListReducer,
+  orderList: orderListSellerReducer,
   orderDelete: orderDeleteReducer,
+  orderSummary: orderSummaryReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

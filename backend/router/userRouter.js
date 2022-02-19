@@ -5,20 +5,32 @@ import {
   login,
   userDetails,
   userUpdate,
+  topSellers,
+  profileUpdate,
+  userDelete,
+  addReviews,
 } from "../controllers/user.controllers.js";
-import { isAuth } from "../middlewares/user.middlewares.js";
+import { isAdmin, isAuth } from "../middlewares/user.middlewares.js";
 
 const router = express.Router();
 
-//@registze
+//@register
 router.post("/register", register);
 //@login
 router.post("/login", login);
 //@find users
-router.get("/", allUsers);
+router.get("/", isAuth, isAdmin, allUsers);
+//@top sellers
+router.get("/top-sellers", topSellers);
 //@find user
 router.get("/:id", isAuth, userDetails);
+//@update profile
+router.put("/profile", isAuth, profileUpdate);
 //@update user
-router.put("/profile", isAuth, userUpdate);
+router.put("/:id", isAuth, isAdmin, userUpdate);
+//@delete user
+router.delete("/:id", isAuth, isAdmin, userDelete);
+//@Add reviews
+router.post("/:id/reviews", isAuth, addReviews);
 
 export default router;

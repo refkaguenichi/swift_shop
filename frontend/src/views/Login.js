@@ -52,6 +52,11 @@ const Login = () => {
             // value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <span>
+            <label />
+            New customer?{" "}
+            <Link to={`/register?redirect=${redirect}`}>Create an account</Link>
+          </span>
           <div>
             <label />
             <button className="primary" type="submit">
@@ -59,11 +64,6 @@ const Login = () => {
             </button>
           </div>
         </div>
-        <span>
-          <label />
-          New customer?{" "}
-          <Link to={`/register?redirect=${redirect}`}>Create an account</Link>
-        </span>
       </form>
     </div>
   );

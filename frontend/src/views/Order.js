@@ -5,15 +5,25 @@ import MessageBox from "../components/MessageBox";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { PayPalButton } from "react-paypal-button-v2";
-import { detailsOrder, payOrder } from "../JS/actions/orderActions";
+// import Stripe from "./../components/Srtipe";
+import {
+  deliverOrder,
+  detailsOrder,
+  payOrder,
+} from "../JS/actions/orderActions";
 import axios from "axios";
-import { ORDER_PAY_RESET } from "../JS/constants/orderConstants";
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from "../JS/constants/orderConstants";
 
 const Order = () => {
   const [sdkReady, setSdkReady] = useState();
   const dispatch = useDispatch();
   const params = useParams();
   const orderId = params.id;
+  const userSignIn = useSelector((state) => state.userSignIn);
+  const { userInfo } = userSignIn;
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
   const orderPay = useSelector((state) => state.orderPay);
@@ -22,8 +32,14 @@ const Order = () => {
     error: errorPay,
     loading: loadingPay,
   } = orderPay;
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const {
+    loading: loadingDeliver,
+    error: errorDeliver,
+    success: successDeliver,
+  } = orderDeliver;
   useEffect(() => {
-    const addPaypalScript = async () => {
+    const addPayPalScript = async () => {
       const { data } = await axios.get("/api/config/paypal");
       const script = document.createElement("script");
       script.type = "text/javascript";
@@ -34,19 +50,30 @@ const Order = () => {
       };
       document.body.appendChild(script);
     };
-    if (!order || successPay || (order && order._id !== orderId)) {
+    if (
+      !order ||
+      successPay ||
+      successDeliver ||
+      (order && order._id !== orderId)
+    ) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(detailsOrder(orderId));
-    } else if (!(order && order.isPaid)) {
-      if (!window.paypal) {
-        addPaypalScript();
-      } else {
-        setSdkReady(true);
+    } else {
+      if (!order.isPaid) {
+        if (!window.paypal) {
+          addPayPalScript();
+        } else {
+          setSdkReady(true);
+        }
       }
     }
-  }, [dispatch, orderId, order, successPay, sdkReady]);
+  }, [dispatch, orderId, sdkReady, successPay, successDeliver, order]);
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(order, paymentResult));
+  };
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order._id));
   };
   return (
     <div>
@@ -57,7 +84,7 @@ const Order = () => {
       ) : (
         <>
           <h1>Order {order && order._id}</h1>
-          <div className="row top">
+          <div className="rows top">
             <div className="col-2">
               <ul>
                 <li>
@@ -113,10 +140,10 @@ const Order = () => {
                     <ul>
                       {order.orderItems.map((item) => (
                         <li key={item.product}>
-                          <div className="row">
+                          <div className="rows">
                             <div>
                               <img
-                                src={`/uploads/${item.image}`}
+                                src={item.image && `/uploads/${item.image}`}
                                 alt={item.name}
                                 className="small"
                               ></img>
@@ -126,7 +153,6 @@ const Order = () => {
                                 {item.name}
                               </Link>
                             </div>
-
                             <div>
                               {item.qty} x ${item.price} = $
                               {item.qty * item.price}
@@ -146,25 +172,25 @@ const Order = () => {
                     <h2>Order Summary</h2>
                   </li>
                   <li>
-                    <div className="row">
+                    <div className="rows">
                       <div>Items</div>
                       <div>${order.itemsPrice.toFixed(2)}</div>
                     </div>
                   </li>
                   <li>
-                    <div className="row">
+                    <div className="rows">
                       <div>Shipping</div>
                       <div>${order.shippingPrice.toFixed(2)}</div>
                     </div>
                   </li>
                   <li>
-                    <div className="row">
+                    <div className="rows">
                       <div>Tax</div>
                       <div>${order.taxPrice.toFixed(2)}</div>
                     </div>
                   </li>
                   <li>
-                    <div className="row">
+                    <div className="rows">
                       <div>
                         <strong> Order Total</strong>
                       </div>
@@ -173,7 +199,7 @@ const Order = () => {
                       </div>
                     </div>
                   </li>
-                  {!order.isPaid && (
+                  {!order.isPaid && order.user === userInfo._id && (
                     <li>
                       {!sdkReady ? (
                         <LoadingBox />
@@ -187,8 +213,27 @@ const Order = () => {
                             amount={order.totalPrice}
                             onSuccess={successPaymentHandler}
                           />
+                          {/* <Stripe/> */}
                         </>
                       )}
+                    </li>
+                  )}
+                  {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                    <li>
+                      {loadingDeliver && <LoadingBox />}
+                      {errorDeliver && (
+                        <MessageBox
+                          variant="danger"
+                          errorDeliver={errorDeliver}
+                        />
+                      )}
+                      <button
+                        type="button"
+                        className="primary block"
+                        onClick={deliverHandler}
+                      >
+                        Deliver Order
+                      </button>
                     </li>
                   )}
                 </ul>

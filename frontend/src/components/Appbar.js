@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signout } from "./../JS/actions/userActions";
-import {
-  Navbar,
-  Container,
-  Nav,
-  NavDropdown,
-  FormControl,
-  Form,
-  Button,
-} from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import SearchBox from "./SearchBox";
+import { useState } from "react";
 
 const Appbar = () => {
   const [show, setShow] = useState(false);
@@ -24,57 +18,75 @@ const Appbar = () => {
     dispatch(signout(navigate));
   };
   const handleShow = () => {
-    setShow(true);
+    setShow(!show);
   };
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container fluid>
           <Navbar.Brand>
             <h1>
-              <Link to="/">Swift Shop</Link>
+              <Link to="/" className="app-title">
+                Swift Shop
+              </Link>
             </h1>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            <Nav
-              // className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: "100px" }}
-              navbarScroll
-            >
-              <Nav.Link>
-                <Link to="/">
-                  <i className="fa fa-home"></i>
-                </Link>
-              </Nav.Link>
-              <Nav.Link>
-                <Link to="/cart">
-                  <i className="fa fa-shopping-cart"></i>
-                  {cartItems.length > 0 && (
-                    <span className="badge">{cartItems.length}</span>
-                  )}
-                </Link>
-              </Nav.Link>
+            <Nav style={{ maxHeight: "100px" }} navbarScroll>
+              <Link to="/" className="fa fa-home fa-lg"></Link>
+              <Link to="/cart" className="fa fa-shopping-cart fa-lg">
+                {cartItems.length > 0 && (
+                  <span className="badge">{cartItems.length}</span>
+                )}
+              </Link>
+              {!show && (
+                <Link
+                  to="#"
+                  className="fa fa-search fa-lg"
+                  onClick={handleShow}
+                ></Link>
+              )}
+              {show && <SearchBox show={show} setShow={setShow} />}
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id="navbarScrollingDropdown">
-                  <NavDropdown.Item>
-                    <Link to="/profile">User Profile</Link>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      window.location.href = `/profile`;
+                    }}
+                  >
+                    My Profile
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
-                    <Link to="/orderhistory">Order history</Link>
+                  <NavDropdown.Item href="/orderhistory">
+                    My Orderhistory
                   </NavDropdown.Item>
-
                   {userInfo && userInfo.isAdmin && (
                     <>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item>
-                        <Link to="/productslist">Products</Link>
+                      <NavDropdown.Item href="/dashboard">
+                        Dashboard
                       </NavDropdown.Item>
-                      <NavDropdown.Item>
-                        <Link to="/orderslist">Orders</Link>
+                      <NavDropdown.Item href="/productlist">
+                        All Products
                       </NavDropdown.Item>
-                      <NavDropdown.Item>
-                        <Link to="/userslist">Users</Link>
+                      <NavDropdown.Item href="/orderlist">
+                        All Orders
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/userlist">
+                        All Users
+                      </NavDropdown.Item>
+                    </>
+                  )}
+
+                  {userInfo && userInfo.isSeller && (
+                    <>
+                      <NavDropdown.Divider />
+                      <NavDropdown.Item href="/productlist/seller">
+                        Seller Products
+                      </NavDropdown.Item>
+                      <NavDropdown.Item href="/orderlist/seller">
+                        Seller Orders
                       </NavDropdown.Item>
                     </>
                   )}
@@ -85,27 +97,17 @@ const Appbar = () => {
                 </NavDropdown>
               ) : (
                 <>
-                  <Button variant="outline-success">
-                    <Link to="/login"> Sign-in</Link>
-                  </Button>
-                  <Button variant="outline-success">
-                    <Link to="/register"> Sign-up</Link>
-                  </Button>
+                  <Link to="/login" className="btn-outline link">
+                    {" "}
+                    Login
+                  </Link>
+                  <Link to="/register" className="btn-contained link">
+                    {" "}
+                    Register
+                  </Link>
                 </>
               )}
             </Nav>
-            <i className="fa fa-search" onClick={handleShow}></i>
-            {show && (
-              <Form className="d-flex">
-                <FormControl
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form>
-            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>

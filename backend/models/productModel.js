@@ -1,14 +1,6 @@
 import mongoose from "mongoose";
-const reviewSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    comment: { type: String, required: true },
-    rating: { type: Number, required: true },
-  },
-  {
-    timestamps: true,
-  }
-);
+import { reviewSchema } from "./ReviewSchema.js";
+
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -17,10 +9,10 @@ const productSchema = new mongoose.Schema(
       unique: true,
       default: "sample name " + Date.now(),
     },
-    // seller: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
+    seller: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
     image: { type: String, default: "" },
-    brand: { type: String, required: true, default: "simple brand" },
-    category: { type: String, required: true, default: "simple category" },
+    brand: { type: String, required: true, default: "Any" },
+    category: { type: String, required: true, default: "Any" },
     description: {
       type: String,
       required: true,
@@ -36,19 +28,6 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-productSchema.post("remove", function (doc, next) {
-  reviewSchema.remove({ product: doc._id }).exec();
-  next();
-});
-
-// clientSchema.pre("remove", function (next) {
-//   // 'this' is the client being removed. Provide callbacks here if you want
-//   // to be notified of the calls' result.
-//   Sweepstakes.remove({ client_id: this._id }).exec();
-//   Submission.remove({ client_id: this._id }).exec();
-//   next();
-// });
 
 const Product = mongoose.model("Product", productSchema);
 

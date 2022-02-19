@@ -17,12 +17,12 @@ const OrderHistory = () => {
   }, [dispatch]);
 
   const deleteHandler = (order) => {
-    if (window.confirm("Are you sure to delete?")) {
+    if (window.confirm("Are you sure to delete this order definitely?")) {
       dispatch(deleteOrder(order._id));
     }
   };
   return (
-    <div>
+    <div style={{ "overflow-x": "auto" }}>
       <h1>Order History</h1>
       {loading ? (
         <LoadingBox />

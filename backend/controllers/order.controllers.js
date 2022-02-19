@@ -6,8 +6,8 @@ export const createOrder = async (req, res) => {
       res.status(400).send({ message: "Cart is empty!" });
     } else {
       const order = new Order({
-        // seller: req.body.orderItems[0].seller,
         ...req.body,
+        seller: req.body.orderItems[0].seller,
         user: req.user._id,
       });
       const createdOrder = await order.save();
@@ -23,9 +23,29 @@ export const createOrder = async (req, res) => {
 export const getMineOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id });
-    res.status(201).send(orders);
+    res.status(200).send(orders);
   } catch (error) {
-    res.status(404).send({ message: "Orders Not Found" });
+    res.status(400).send({ message: "Orders Not Found" });
+  }
+};
+
+export const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
+    res.status(200).send(orders);
+  } catch (error) {
+    res.status(400).send({ message: "Orders Not Found" });
+  }
+};
+
+export const getSellerOrders = async (req, res) => {
+  try {
+    const seller = req.query.seller || "";
+    const sellerFilter = seller ? { seller } : {};
+    const orders = await Order.find(sellerFilter).populate("user");
+    res.send(orders);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -66,5 +86,22 @@ export const payOrder = async (req, res) => {
     }
   } catch (error) {
     res.status(404).send({ message: "Order Not Found" });
+  }
+};
+
+export const orderDeliever = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+
+      const updatedOrder = await order.save();
+      res.send({ message: "Order Delivered", order: updatedOrder });
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
