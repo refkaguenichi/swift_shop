@@ -59,7 +59,7 @@ const ProductView = () => {
         <MessageBox variant="danger" error={error} />
       ) : (
         <>
-          <Link to="/" className="fa fa-arrow-circle-left primary">
+          <Link to="/" className="fa fa-arrow-circle-left primary go-back">
             Back to home
           </Link>
           <div

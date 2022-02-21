@@ -5,7 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PRODUCT_UPDATE_RESET } from "../JS/constants/productConstants";
-import { detailsProduct, updateProduct } from "../JS/actions/productActions";
+import {
+  createProduct,
+  detailsProduct,
+  updateProduct,
+} from "../JS/actions/productActions";
 
 const ProductEdit = (props) => {
   const navigate = useNavigate();
@@ -49,19 +53,33 @@ const ProductEdit = (props) => {
   }, [product, dispatch, productId, successUpdate, navigate]);
   const submitHandler = (e) => {
     e.preventDefault();
-    // TODO: dispatch update product
-    dispatch(
-      updateProduct({
-        _id: productId,
-        name,
-        price,
-        image,
-        category,
-        brand,
-        countInStock,
-        description,
-      })
-    );
+    if (productId) {
+      dispatch(
+        updateProduct({
+          _id: productId,
+          name,
+          price,
+          image,
+          category,
+          brand,
+          countInStock,
+          description,
+        })
+      );
+    } else {
+      dispatch(
+        createProduct({
+          _id: productId,
+          name,
+          price,
+          image,
+          category,
+          brand,
+          countInStock,
+          description,
+        })
+      );
+    }
   };
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [errorUpload, setErrorUpload] = useState("");
@@ -92,7 +110,7 @@ const ProductEdit = (props) => {
     <>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Edit Product {productId}</h1>
+          <h1>{productId ? "Edit Product " : "Add new Product "}</h1>
         </div>
         {loadingUpdate && <LoadingBox />}
         {errorUpdate && (
@@ -149,13 +167,37 @@ const ProductEdit = (props) => {
             </div>
             <div>
               <label htmlFor="category">Category</label>
-              <input
+              <select
                 id="category"
                 type="text"
-                placeholder="Enter category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              />
+              >
+                <option value="" style={{ color: "#ccc" }}>
+                  Select category...
+                </option>
+                <option value="Any">Any</option>
+                <option value="Books, movies and music">
+                  Books, Movies & Music
+                </option>
+                <option value="Furniture">Furniture</option>
+                <option value="Tools and home improvement">
+                  Tools and Home Improvement
+                </option>
+                <option value="Housing for sale">Housing for Sale</option>
+                <option value="Property rentals">Property Rentals</option>
+                <option value="Health and beauty">Health & Beauty</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Phones and accessories">
+                  Phones & Accessories
+                </option>
+                <option value="Vehicles">Vehicles</option>
+                <option value="Sporting goods">Sporting Goods</option>
+                <option value="Jewelry and watches">Jewelry & Watches</option>
+                <option value="Clothing and shoes">Clothing & Shoes</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Pets or animals">Pets/Animals</option>
+              </select>
             </div>
             <div>
               <label htmlFor="brand">Brand</label>

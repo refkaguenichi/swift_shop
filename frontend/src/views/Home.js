@@ -10,7 +10,7 @@ import {
   listProducts,
   listTopProducts,
 } from "./../JS/actions/productActions";
-import { Carousel, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { listTopSellers } from "../JS/actions/userActions";
 
@@ -45,37 +45,6 @@ const Home = () => {
   }, [dispatch]);
   return (
     <>
-      {/* <>
-        {" "}
-        {loadingTop ? (
-          <LoadingBox />
-        ) : errorTop ? (
-          <MessageBox variant="danger" errorTop={errorTop} />
-        ) : (
-          <>
-            {topProducts && topProducts.length === 0 && (
-              <MessageBox variant="info" sl={topProducts.length} />
-            )}
-            <Carousel>
-              {topProducts &&
-                topProducts.map((tp) => (
-                  <Carousel.Item interval={1000} key={tp._id}>
-                    <Link to={`/products/${tp._id}`}>
-                      <img
-                        className="d-block w-100 carousel"
-                        src={tp.image && `/uploads/${tp.image}`}
-                        alt={tp.name}
-                      />
-                      <Carousel.Caption>
-                        <span>{tp.name}</span>
-                      </Carousel.Caption>
-                    </Link>
-                  </Carousel.Item>
-                ))}
-            </Carousel>
-          </>
-        )}
-      </> */}
       <>
         {" "}
         {loadingTop ? (
@@ -113,6 +82,9 @@ const Home = () => {
           <MessageBox variant="danger" errorCategories={errorCategories} />
         ) : (
           <div className="category">
+            {categories.length === 0 && (
+              <MessageBox variant="info" tpcat={categories.length} />
+            )}
             {categories &&
               categories.map((category, idx) => (
                 <>
@@ -121,23 +93,37 @@ const Home = () => {
                       <Card.Img
                         variant="top"
                         src={
-                          category.toLowerCase() ===
-                          ("laptop" || "pc" || "computer")
-                            ? "https://images.frandroid.com/wp-content/uploads/2021/04/microsoft-surface-laptop-4-frandroid-2021.png"
-                            : category.toLowerCase() === ("watches" || "watch")
-                            ? "https://img.bfmtv.com/images/be06a4/32fd0aec5a7fce6ab49b4b592a.jpg"
-                            : category.toLowerCase() === ("pants" || "pantalon")
-                            ? "https://cdn.aarp.net/content/dam/aarp/entertainment/beauty-and-style/2022/01/1140-utility-pants.jpg"
+                          category.toLowerCase() === "vehicles"
+                            ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5Tdr4J98z7vNsi4hBqVwlfrCRjO4iXVT5Og&usqp=CAU"
+                            : category.toLowerCase() === "jewelry and watches"
+                            ? "https://finchannel.com/wp-content/uploads/2017/12/gurgenidze_00001jewelrywatches.jpg"
                             : category.toLowerCase() ===
-                              ("shoes" || "shoe" || "snickers" || "snicker")
-                            ? "https://www.runningshoesguru.com/wp-content/uploads/2020/02/running-shoes-reviews.jpg"
-                            : category.toLowerCase() === ("bike" || "bikes")
-                            ? "https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
-                            : category.toLowerCase() ===
-                              ("clothes" || "clothe" || "clothing" || "cloth")
+                              "phones and accessories"
+                            ? "https://cdn.moneymint.com/wp-content/uploads/2021/02/Cell-Phone-Accessories-Business-Plan-%E2%80%93-How-To-Start-1.jpg"
+                            : category.toLowerCase() === "accessories"
+                            ? "https://e-deals.com.tn/ecdata/stores/QXVAZW3888/image/data/www.madebyvadim.com.jpg"
+                            : category.toLowerCase() === "electronics"
+                            ? "https://ecommerce.ccc2020.fr/wp-content/uploads/2020/10/electronic-gadgets.jpeg"
+                            : category.toLowerCase() === "clothing and shoes"
                             ? "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvdGhzfGVufDB8fDB8fA%3D%3D&w=1000&q=80"
-                            : category.toLowerCase() === ("glasses" || "glass")
-                            ? "https://images.prismic.io/bn-ca/a39e7042-ef48-4f4e-83a3-72a0dedf25f8_ProductFlatlay_LowRes.jpg?auto=compress%2Cformat&rect=68%2C0%2C1465%2C1067&w=2033&h=1481"
+                            : category.toLowerCase() === "sporting goods"
+                            ? "https://unitedfsi.com/wp-content/uploads/2018/10/Sporting-Goods-800x744.jpg"
+                            : category.toLowerCase() === "pets/animals"
+                            ? "https://petsrus.com.au/uploads/images/_1500x1120_fit_center-center_70_none/pets-in-park-2.jpg"
+                            : category.toLowerCase() === "health and beauty"
+                            ? "https://livingchapterthree.com/wp-content/uploads/2020/02/header_image_Article_Main-The_Many_Health_and_Beauty_Benefits_of_Castor_Oil.png"
+                            : category.toLowerCase() === "property rentals"
+                            ? "https://www.tokeet.com/wp-content/uploads/2018/10/rental-property-management-img2.jpg"
+                            : category.toLowerCase() === "housing for sale"
+                            ? "https://www.tokeet.com/wp-content/uploads/2018/10/rental-property-management-img2.jpg"
+                            : category.toLowerCase() ===
+                              "tools and home improvement"
+                            ? "https://www.pngkit.com/png/detail/105-1053299_top-3-home-improvement-trends-ideas-home-repair.png"
+                            : category.toLowerCase() === "furniture"
+                            ? "https://images.ctfassets.net/5de70he6op10/7KotRtmFAvP7OWLTE7PHjH/e31963346fdc1532c2ab8aab3ac3360c/Furniture__Gateway_LP_LS_03.jpg?w=934&q=80&fm=jpg&fl=progressive"
+                            : category.toLowerCase() ===
+                              " books, movies and music"
+                            ? "https://fortheloveofharry.com/wp-content/uploads/2014/12/Books-Movies-and-Music-Index.jpg"
                             : "https://i.ytimg.com/vi/_kqVe4c3T00/maxresdefault.jpg"
                         }
                         alt={idx}
@@ -171,8 +157,8 @@ const Home = () => {
                     <img
                       className="logo"
                       src={
-                        seller.seller.logo
-                          ? seller.seller.logo
+                        seller.seller.image
+                          ? `/uploads/${seller.seller.image}`
                           : "https://as2.ftcdn.net/v2/jpg/02/83/64/63/500_F_283646367_OqoeMFGI3CBh5O2hEU7CYOzHz3ZYtCE7.jpg"
                       }
                       alt={seller.seller.name || seller._id}
@@ -192,7 +178,10 @@ const Home = () => {
         ) : error ? (
           <MessageBox variant="danger" error={error} />
         ) : (
-          <div className="products g-4 row row-cols-md-2 row-cols-1">
+          <div className="products row row-cols-md-2 row-cols-1">
+            {products.length === 0 && (
+              <MessageBox variant="info" tps={products.length} />
+            )}
             {products.length !== 0 &&
               products.map((product) => (
                 <Product key={product._id} product={product} />

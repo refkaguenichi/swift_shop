@@ -117,19 +117,15 @@ export const detailsProduct = (productId) => async (dispatch) => {
   }
 };
 
-export const createProduct = () => async (dispatch, getState) => {
-  dispatch({ type: PRODUCT_CREATE_REQUEST });
+export const createProduct = (product) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_CREATE_REQUEST, payload: product });
   const {
     userSignIn: { userInfo },
   } = getState();
   try {
-    const { data } = await axios.post(
-      "/api/products/",
-      {},
-      {
-        headers: { Authorization: `${userInfo.token}` },
-      }
-    );
+    const { data } = await axios.post("/api/products/", product, {
+      headers: { Authorization: `${userInfo.token}` },
+    });
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
       payload: data.product,

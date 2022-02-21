@@ -50,6 +50,7 @@ const UserEdit = (props) => {
     // dispatch update user
     dispatch(updateUser({ _id: userId, name, email, isSeller, isAdmin }));
   };
+
   return (
     <div>
       <form className="form" onSubmit={submitHandler}>

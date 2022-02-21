@@ -68,12 +68,20 @@ const Seller = (props) => {
                   <div className="p-1">
                     <img
                       className="small"
-                      src={user.seller.logo}
-                      alt={user.seller.name}
+                      src={
+                        user.seller.image
+                          ? `/uploads/${user.seller.image}`
+                          : "https://as2.ftcdn.net/v2/jpg/02/83/64/63/500_F_283646367_OqoeMFGI3CBh5O2hEU7CYOzHz3ZYtCE7.jpg"
+                      }
+                      alt={user.seller.name ? user.seller.name : `${sellerId}`}
                     ></img>
                   </div>
                   <div className="p-1">
-                    <h1>{user.seller.name}</h1>
+                    <h1 className="center">
+                      {user.seller.name
+                        ? user.seller.name
+                        : `Seller${sellerId}`.substring(0, 10)}
+                    </h1>
                   </div>
                 </div>
               </li>
@@ -86,7 +94,11 @@ const Seller = (props) => {
               <li>
                 <a href={`mailto:${user.email}`}>Contact Seller</a>
               </li>
-              <li>{user.seller.description}</li>
+              <li>
+                {user.seller.description
+                  ? user.seller.description
+                  : "Seller description"}
+              </li>
             </ul>
             <div className="reviews">
               <h2 id="reviews">Reviews</h2>

@@ -31,8 +31,13 @@ const upload = multer({
   },
 });
 
-uploadRouter.post("/", isAuth, upload.single("image"), (req, res) => {
-  res.send(`${req.file.filename}`);
-});
+uploadRouter.post(
+  "/",
+  isAuth,
+  upload.single("image" || "sellerLogo"),
+  (req, res) => {
+    res.send(`${req.file.filename}`);
+  }
+);
 
 export default uploadRouter;

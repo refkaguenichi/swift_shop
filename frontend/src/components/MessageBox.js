@@ -66,6 +66,9 @@ const MessageBox = (props) => {
       {props.dailyOrdersMessage === 0 && <span>No sales</span>}
       {props.sumCatMes === 0 && <span>No Category</span>}
       {props.errorTop}
+      {props.tp === 0 && <span> No Product Found</span>}
+      {props.tps === 0 && <span> No Featured Products</span>}
+      {props.tpcat === 0 && <span> No Categories</span>}
     </div>
   );
 };

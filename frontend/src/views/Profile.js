@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { detailsUser, updateUserProfile } from "./../JS/actions/userActions";
 import LoadingBox from "./../components/LoadingBox";
@@ -11,8 +12,10 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [sellerName, setSellerName] = useState("");
-  const [sellerLogo, setSellerLogo] = useState("");
+  const [image, setImage] = useState("");
   const [sellerDescription, setSellerDescription] = useState("");
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [errorUpload, setErrorUpload] = useState("");
   const dispatch = useDispatch();
   const userSignIn = useSelector((state) => state.userSignIn);
   const { userInfo } = userSignIn;
@@ -33,7 +36,7 @@ const Profile = () => {
       setEmail(user.email);
       if (user.seller) {
         setSellerName(user.seller.name);
-        setSellerLogo(user.seller.logo);
+        setImage(user.seller.logo);
         setSellerDescription(user.seller.description);
       }
     }
@@ -51,10 +54,29 @@ const Profile = () => {
           email,
           password,
           sellerName,
-          sellerLogo,
+          image,
           sellerDescription,
         })
       );
+    }
+  };
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append("image", file);
+    setLoadingUpload(true);
+    try {
+      const { data } = await axios.post("/api/uploads", bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${userInfo.token}`,
+        },
+      });
+      setImage(data);
+      setLoadingUpload(false);
+    } catch (error) {
+      setErrorUpload(error.message);
+      setLoadingUpload(false);
     }
   };
   return (
@@ -126,14 +148,27 @@ const Profile = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="sellerLogo">Seller Logo</label>
+                  <label htmlFor="image">Image</label>
                   <input
-                    id="sellerLogo"
+                    id="image"
                     type="text"
-                    placeholder="Enter Seller Logo"
-                    value={sellerLogo}
-                    onChange={(e) => setSellerLogo(e.target.value)}
+                    placeholder="Enter an image"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
                   />
+                </div>
+                <div>
+                  <label htmlFor="imageFile">Image File</label>
+                  <input
+                    type="file"
+                    id="imageFile"
+                    label="Choose Image"
+                    onChange={uploadFileHandler}
+                  />
+                  {loadingUpload && <LoadingBox />}
+                  {errorUpload && (
+                    <MessageBox variant="danger" errorUpload={errorUpload} />
+                  )}
                 </div>
                 <div>
                   <label htmlFor="sellerDescription">Seller Description</label>

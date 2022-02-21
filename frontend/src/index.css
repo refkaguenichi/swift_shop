@@ -11,18 +11,18 @@
 html {
   font-size: 62.5%; /* 16px x 62.5 = 10px = 1rem */
   box-sizing: border-box;
+  height: 100%;
+  scroll-behavior: smooth;
 }
 body {
-  overflow-y: scroll;
-  position: relative;
-  /* min-height: 100%; */
-  background-color: transparent;
-  margin: 0;
-  height: 100vh;
   font-size: 1.6rem;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
 }
 #root {
   height: 100%;
@@ -185,6 +185,8 @@ a.brand {
 }
 .p-1 {
   padding: 1rem;
+  display: flex;
+  justify-content: center;
 }
 /* Aside */
 aside {
@@ -278,6 +280,7 @@ img.large {
 }
 .alert {
   padding: 1rem;
+  margin-top: 2rem;
   /* border: 0.1rem solid transparent;
   border-radius: 0.5rem; */
 }
@@ -297,9 +300,15 @@ img.large {
 .form {
   padding: 2rem;
   max-width: 40rem;
-  margin: 2rem auto 0 auto;
+  margin: 2rem auto;
   border-radius: 5px;
   border: 0.1rem #ccc solid;
+}
+
+@media (max-width: 240px) {
+  .form {
+    max-width: 20rem;
+  }
 }
 .form > div {
   display: flex;
@@ -349,27 +358,35 @@ img.large {
 }
 
 .search button {
-  border-radius: 0 5rem 5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
   border-right: none;
   margin-right: 0.5rem;
   margin-top: 0;
   padding: 0.1rem;
+  border: 0.1rem #f0c040 solid;
 }
 .search input {
-  border-radius: 5rem 0 0 5rem;
+  border-radius: 0.5rem 0 0 0.5rem;
   border-right: none;
   margin-left: 0.5rem;
   max-width: 20rem;
   padding: 0.1rem;
+  background: transparent;
+  border: 0.1rem #f0c040 solid;
 }
 
 @media (max-width: 992px) {
   .search {
     margin: 1rem auto;
   }
+  .search input,
+  button {
+    padding: 0.5rem;
+  }
   #navbarScrollingDropdown {
     margin-left: 0;
-    max-width: 22rem;
+    max-width: 8rem;
+    background: none;
   }
 }
 
@@ -530,7 +547,7 @@ img {
 }
 
 .products {
-  margin: 0 auto;
+  margin: 0 auto 5rem auto;
 }
 
 @media (max-width: 992px) {
@@ -679,7 +696,6 @@ nav a:hover {
 /*Footer*/
 footer {
   position: absolute;
-  margin-top: 10rem;
   bottom: 0;
   left: 0;
   right: 0;
@@ -733,4 +749,14 @@ footer a {
   font-size: 1rem;
   text-decoration: none;
   background-color: #f0c040;
+}
+
+.go-back {
+  color: #f0c040;
+  font-size: 2rem;
+}
+
+.go-back:hover {
+  color: #f0c040;
+  font-size: 2rem;
 }

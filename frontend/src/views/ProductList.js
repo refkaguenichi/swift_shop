@@ -15,6 +15,7 @@ import {
 
 const ProductList = (props) => {
   const navigate = useNavigate();
+  const params = useParams();
   const { pageNumber = 1 } = useParams();
   const { pathname } = useLocation();
   const sellerMode = pathname.indexOf("/seller") >= 0;
@@ -57,6 +58,7 @@ const ProductList = (props) => {
     successDelete,
     userInfo._id,
     pageNumber,
+    params,
   ]);
 
   const deleteHandler = (product) => {
@@ -116,6 +118,7 @@ const ProductList = (props) => {
                       className="small"
                       onClick={() => navigate(`/products/${product._id}/edit`)}
                     >
+                      {params.id}
                       Edit
                     </button>
                     <button
