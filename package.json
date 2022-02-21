@@ -8,7 +8,8 @@
     "start": "cd backend && node server",
     "front": "cd frontend && npm start",
     "back": "cd backend && nodemon server",
-    "dev": "concurrently \"npm run front\" \"npm run back\""
+    "dev": "concurrently \"npm run front\" \"npm run back\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install cd frontend && npm run build"
   },
   "engines": {
     "node": "16.13.0",

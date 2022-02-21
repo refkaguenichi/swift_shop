@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-// import path from "path";
+import path from "path";
 import express from "express";
 import connectDB from "./config/connectDB.js";
 import summaryRouter from "./router/summaryRouter.js";
@@ -31,12 +31,15 @@ app.get("/api/config/google", (req, res) => {
   res.send(process.env.GOOGLE_API_KEY);
 });
 
-// app.use(express.static(path.join(__dirname, "../frontend/build")));
+if (process.env.NODE_ENV === "production") {
+  // Exprees will serve up production assets
+  app.use(express.static("frontend/build"));
 
-// app.get("/", function (req, res) {
-//   res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
-// });
-
+  // Express serve up index.html file if it doesn't recognize route
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  });
+}
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Serve at http://localhost:${port}`);
