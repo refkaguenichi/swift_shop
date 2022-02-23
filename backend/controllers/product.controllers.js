@@ -35,7 +35,9 @@ export const allProducts = async (req, res) => {
 
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
     const sellerFilter = seller ? { seller } : {};
-    const categoryFilter = category ? { category } : {};
+    const categoryFilter = category
+      ? { category: { $regex: category, $options: "i" } }
+      : {};
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
     const sortOrder =

@@ -9,6 +9,8 @@ import MessageBox from "./../components/MessageBox";
 const OrderHistory = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userSignIn = useSelector((state) => state.userSignIn);
+  const { userInfo } = userSignIn;
   const orderMineList = useSelector((state) => state.orderMineList);
   const { loading, error, orders } = orderMineList;
   useEffect(() => {
@@ -62,13 +64,15 @@ const OrderHistory = () => {
                   >
                     Details
                   </button>
-                  <button
-                    type="button"
-                    className="small"
-                    onClick={() => deleteHandler(order)}
-                  >
-                    Delete
-                  </button>
+                  {userInfo.isAdmin && (
+                    <button
+                      type="button"
+                      className="small"
+                      onClick={() => deleteHandler(order)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

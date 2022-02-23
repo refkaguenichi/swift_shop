@@ -27,6 +27,7 @@
   "homepage": "https://github.com/refkaguenichi/swift_shop#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "debug": "^4.3.3",
     "express": "^4.17.2",
     "heroku": "^7.59.2",
     "jsonwebtoken": "^8.5.1",

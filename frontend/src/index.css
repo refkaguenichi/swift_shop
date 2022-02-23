@@ -372,6 +372,7 @@ img.large {
   max-width: 20rem;
   padding: 0.1rem;
   background: transparent;
+  color: #fff;
   border: 0.1rem #f0c040 solid;
 }
 

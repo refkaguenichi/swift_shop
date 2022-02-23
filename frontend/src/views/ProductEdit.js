@@ -177,26 +177,24 @@ const ProductEdit = (props) => {
                   Select category...
                 </option>
                 <option value="Any">Any</option>
-                <option value="Books, movies and music">
+                <option value="Books&movies&music">
                   Books, Movies & Music
                 </option>
                 <option value="Furniture">Furniture</option>
-                <option value="Tools and home improvement">
-                  Tools and Home Improvement
+                <option value="Tools&HomeImprovement">
+                  Tools & Home Improvement
                 </option>
-                <option value="Housing for sale">Housing for Sale</option>
-                <option value="Property rentals">Property Rentals</option>
-                <option value="Health and beauty">Health & Beauty</option>
+                <option value="HousingForSale">Housing for Sale</option>
+                <option value="PropertyRentals">Property Rentals</option>
+                <option value="Health&Beauty">Health & Beauty</option>
                 <option value="Electronics">Electronics</option>
-                <option value="Phones and accessories">
-                  Phones & Accessories
-                </option>
+                <option value="Phones&Accessories">Phones & Accessories</option>
                 <option value="Vehicles">Vehicles</option>
-                <option value="Sporting goods">Sporting Goods</option>
-                <option value="Jewelry and watches">Jewelry & Watches</option>
-                <option value="Clothing and shoes">Clothing & Shoes</option>
+                <option value="SportingGoods">Sporting Goods</option>
+                <option value="Jewelry&Watches">Jewelry & Watches</option>
+                <option value="Clothing&Shoes">Clothing & Shoes</option>
                 <option value="Accessories">Accessories</option>
-                <option value="Pets or animals">Pets/Animals</option>
+                <option value="Pets/Animals">Pets/Animals</option>
               </select>
             </div>
             <div>
